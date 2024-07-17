@@ -1,4 +1,3 @@
-
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 import datetime
@@ -7,6 +6,7 @@ import datetime
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
+
 
 #OBJECT MODELS
 class User(UserMixin, db.Model):
@@ -22,9 +22,11 @@ class User(UserMixin, db.Model):
         self.email = email
         self.username = username
         self.password_hash = generate_password_hash(password)
+
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
-    
+
+
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.Text)
@@ -37,10 +39,12 @@ class Post(db.Model):
     #cache stuff
     lastcheck = None
     savedresponce = None
+
     def __init__(self, title, content, postdate):
         self.title = title
         self.content = content
         self.postdate = postdate
+
     def get_time_string(self):
         #this only needs to be calculated every so often, not for every request
         #this can be a rudamentary chache
@@ -55,17 +59,18 @@ class Post(db.Model):
         seconds = diff.total_seconds()
         print(seconds)
         if seconds / (60 * 60 * 24 * 30) > 1:
-            self.savedresponce =  " " + str(int(seconds / (60 * 60 * 24 * 30))) + " months ago"
+            self.savedresponce = " " + str(int(seconds / (60 * 60 * 24 * 30))) + " months ago"
         elif seconds / (60 * 60 * 24) > 1:
-            self.savedresponce =  " " + str(int(seconds / (60*  60 * 24))) + " days ago"
+            self.savedresponce = " " + str(int(seconds / (60 * 60 * 24))) + " days ago"
         elif seconds / (60 * 60) > 1:
             self.savedresponce = " " + str(int(seconds / (60 * 60))) + " hours ago"
         elif seconds / (60) > 1:
             self.savedresponce = " " + str(int(seconds / 60)) + " minutes ago"
         else:
-            self.savedresponce =  "Just a moment ago!"
+            self.savedresponce = "Just a moment ago!"
 
         return self.savedresponce
+
 
 class Subforum(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -76,9 +81,11 @@ class Subforum(db.Model):
     posts = db.relationship("Post", backref="subforum")
     path = None
     hidden = db.Column(db.Boolean, default=False)
+
     def __init__(self, title, description):
         self.title = title
         self.description = description
+
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -89,9 +96,11 @@ class Comment(db.Model):
 
     lastcheck = None
     savedresponce = None
+
     def __init__(self, content, postdate):
         self.content = content
         self.postdate = postdate
+
     def get_time_string(self):
         #this only needs to be calculated every so often, not for every request
         #this can be a rudamentary chache
@@ -104,38 +113,41 @@ class Comment(db.Model):
         diff = now - self.postdate
         seconds = diff.total_seconds()
         if seconds / (60 * 60 * 24 * 30) > 1:
-            self.savedresponce =  " " + str(int(seconds / (60 * 60 * 24 * 30))) + " months ago"
+            self.savedresponce = " " + str(int(seconds / (60 * 60 * 24 * 30))) + " months ago"
         elif seconds / (60 * 60 * 24) > 1:
-            self.savedresponce =  " " + str(int(seconds / (60*  60 * 24))) + " days ago"
+            self.savedresponce = " " + str(int(seconds / (60 * 60 * 24))) + " days ago"
         elif seconds / (60 * 60) > 1:
             self.savedresponce = " " + str(int(seconds / (60 * 60))) + " hours ago"
         elif seconds / (60) > 1:
             self.savedresponce = " " + str(int(seconds / 60)) + " minutes ago"
         else:
-            self.savedresponce =  "Just a moment ago!"
+            self.savedresponce = "Just a moment ago!"
         return self.savedresponce
 
+
 def error(errormessage):
-	return "<b style=\"color: red;\">" + errormessage + "</b>"
+    return "<b style=\"color: red;\">" + errormessage + "</b>"
+
 
 def generateLinkPath(subforumid):
-	links = []
-	subforum = Subforum.query.filter(Subforum.id == subforumid).first()
-	parent = Subforum.query.filter(Subforum.id == subforum.parent_id).first()
-	links.append("<a href=\"/subforum?sub=" + str(subforum.id) + "\">" + subforum.title + "</a>")
-	while parent is not None:
-		links.append("<a href=\"/subforum?sub=" + str(parent.id) + "\">" + parent.title + "</a>")
-		parent = Subforum.query.filter(Subforum.id == parent.parent_id).first()
-	links.append("<a href=\"/\">Forum Index</a>")
-	link = ""
-	for l in reversed(links):
-		link = link + " / " + l
-	return link
+    links = []
+    subforum = Subforum.query.filter(Subforum.id == subforumid).first()
+    parent = Subforum.query.filter(Subforum.id == subforum.parent_id).first()
+    links.append("<a href=\"/subforum?sub=" + str(subforum.id) + "\">" + subforum.title + "</a>")
+    while parent is not None:
+        links.append("<a href=\"/subforum?sub=" + str(parent.id) + "\">" + parent.title + "</a>")
+        parent = Subforum.query.filter(Subforum.id == parent.parent_id).first()
+    links.append("<a href=\"/\">Forum Index</a>")
+    link = ""
+    for l in reversed(links):
+        link = link + " / " + l
+    return link
 
 
 #Post checks
 def valid_title(title):
-	return len(title) > 4 and len(title) < 140
-def valid_content(content):
-	return len(content) > 10 and len(content) < 5000
+    return len(title) > 4 and len(title) < 140
 
+
+def valid_content(content):
+    return len(content) > 10 and len(content) < 5000
