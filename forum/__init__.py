@@ -18,4 +18,4 @@ def create_app():
         # Add some routes
         db.create_all()
         return app
-
+#Teddy
