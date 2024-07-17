@@ -1,3 +1,4 @@
+setuptools
 Flask
 Flask-Login
 Flask-SQLAlchemy
