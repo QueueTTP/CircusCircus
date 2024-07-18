@@ -1,6 +1,6 @@
+import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-import datetime
 
 # create db here so it can be imported (with the models) into the App object.
 from flask_sqlalchemy import SQLAlchemy

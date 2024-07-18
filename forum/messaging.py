@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from forum.models import db, Message
+from models import db, Message
 from flask_login import current_user, login_required
 from datetime import datetime
 
