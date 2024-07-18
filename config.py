@@ -17,4 +17,6 @@ class Config:
     SQLALCHEMY_ECHO = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+
+    #Qian
     UPLOAD_PHOTOS = path.join(basedir,'uploads')
