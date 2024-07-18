@@ -35,15 +35,17 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     subforum_id = db.Column(db.Integer, db.ForeignKey('subforum.id'))
     postdate = db.Column(db.DateTime)
+    image_filename =db.Column(db.String(150), nullable=True)
 
     #cache stuff
     lastcheck = None
     savedresponce = None
 
-    def __init__(self, title, content, postdate):
+    def __init__(self, title, content, postdate,image_filename=None):
         self.title = title
         self.content = content
         self.postdate = postdate
+        self.image_filename=image_filename
 
     def get_time_string(self):
         #this only needs to be calculated every so often, not for every request
