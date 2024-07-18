@@ -16,3 +16,5 @@ class Config:
     SQLALCHEMY_DATABASE_URI = 'sqlite:///circuscircus.db'
     SQLALCHEMY_ECHO = False
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+    UPLOAD_PHOTOS = path.join(basedir,'uploads')
