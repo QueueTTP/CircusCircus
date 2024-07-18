@@ -6,8 +6,8 @@ from forum.models import Subforum, db, User
 from . import create_app
 app = create_app()
 
-app.config['SITE_NAME'] = 'Cute Tiny Pets'
-app.config['SITE_DESCRIPTION'] = 'a forum to'
+app.config['SITE_NAME'] = 'Schooner'
+app.config['SITE_DESCRIPTION'] = 'a schooner forum'
 app.config['FLASK_DEBUG'] = 1
 
 def init_site():

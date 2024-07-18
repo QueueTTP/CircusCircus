@@ -189,3 +189,11 @@
 .varwidth{
 	width: 50%;
 }
+
+.layout-image {
+	width: 90px; /* Adjust the size as needed */
+	height: auto;
+	float: left;
+	display: block;
+	margin: 10px; /* Center the image */
+}
