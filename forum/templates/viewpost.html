@@ -17,6 +17,17 @@
 		{{post.content}}
 	</div>
 
+	<!-- Like and Dislike Buttons with Counters -->
+	<div class="postactions">
+		<button id="likeButton" onclick="likePost({{ post.id }})">Like</button>
+		<span id="likeCount">{{ post.likes }}</span>
+		<button id="dislikeButton" onclick="dislikePost({{ post.id }})">Dislike</button>
+		<span id="dislikeCount">{{ post.dislikes }}</span>
+	</div>
+</div>
+
+
+
 </div>
 <div class="addcomment" id="addcomment">
 	<form action="/action_comment?post={{ post.id }}" method="POST">
