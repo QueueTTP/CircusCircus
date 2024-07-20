@@ -17,6 +17,10 @@ class User(UserMixin, db.Model):
     admin = db.Column(db.Boolean, default=False)
     posts = db.relationship("Post", backref="user")
     comments = db.relationship("Comment", backref="user")
+    # Additional fields added here - Peter 
+    subforum_start = db.Column(db.Integer, nullable=False, default=0)
+    theme = db.Column(db.Boolean, default=False)
+    
 
     def __init__(self, email, username, password):
         self.email = email
@@ -35,15 +39,25 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     subforum_id = db.Column(db.Integer, db.ForeignKey('subforum.id'))
     postdate = db.Column(db.DateTime)
+    # Additional fields added here - Peter 
+    like_count = db.Column(db.Integer, default=0)
+    dislike_count = db.Column(db.Integer, default=0, nullable=False)
+    public_view = db.Column(db.Boolean, default=True, nullable=False)
 
     #cache stuff
     lastcheck = None
     savedresponce = None
 
-    def __init__(self, title, content, postdate):
+    # Updated init constructor -Peter
+    def __init__(self, title, content, postdate, like_count=0, dislike_count=0, public_view=False):
         self.title = title
         self.content = content
         self.postdate = postdate
+        # Added initial likes and dislikes and public view status -Peter
+        self.like_count = like_count
+        self.dislike_count = dislike_count
+        self.public_view = public_view
+
 
     def get_time_string(self):
         #this only needs to be calculated every so often, not for every request
@@ -72,6 +86,7 @@ class Post(db.Model):
         return self.savedresponce
 
 
+
 class Subforum(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.Text, unique=True)
@@ -82,7 +97,7 @@ class Subforum(db.Model):
     path = None
     hidden = db.Column(db.Boolean, default=False)
 
-    def __init__(self, title, description):
+    def __init__(self, title, description, subforum_start=None):
         self.title = title
         self.description = description
 

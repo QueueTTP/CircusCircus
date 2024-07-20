@@ -1,3 +1,4 @@
+
 {% extends 'layout.html' %}
 {% block body %}
 {{ path|safe}}
@@ -17,18 +18,16 @@
 		{{post.content}}
 	</div>
 
-	<!-- Like and Dislike Buttons with Counters -->
-	<div class="postactions">
-		<button id="likeButton" onclick="likePost({{ post.id }})">Like</button>
-		<span id="likeCount">{{ post.likes }}</span>
-		<button id="dislikeButton" onclick="dislikePost({{ post.id }})">Dislike</button>
-		<span id="dislikeCount">{{ post.dislikes }}</span>
-	</div>
 </div>
-
-
-
+<!-- Add Likies/Dislikes display here-->
+<!--  -->
+<!-- Added likes and dislike buttons here -Peter -->
+<div class="postlikes">
+    <button onclick="likePost('{{ post.id }}')">👍 Like (<span id="like-count">{{ post.like_count }}</span>)</button>
+    <button onclick="dislikePost('{{ post.id }}')">👎 Dislike (<span id="dislike-count">{{ post.dislike_count }}</span>)</button>
 </div>
+<!-- end likes disklikes div -->
+
 <div class="addcomment" id="addcomment">
 	<form action="/action_comment?post={{ post.id }}" method="POST">
 		<textarea class="inputbox varwidth" rows="6" name="content"></textarea><br>
@@ -79,6 +78,47 @@ function toggle(){
 		button.value="Add a comment"
 	}
 	
+}
+// Added javascript to display likes and dislies -Peter
+function likePost(postId) {
+    console.log("Liking post with ID:", postId); // Debug log
+    fetch(`/like_post/${postId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        console.log("Response:", response); // Debug log
+        return response.json();
+    })
+    .then(data => {
+        console.log("Data:", data); // Debug log
+        if (data.success) {
+            document.getElementById('like-count').innerText = data.like_count;
+        } else {
+            alert('Error: ' + data.message);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function dislikePost(postId) {
+    fetch(`/dislike_post/${postId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById('dislike-count').innerText = data.dislike_count;
+        } else {
+            alert('Error: ' + data.message);
+        }
+    })
+    .catch(error => console.error('Error:', error));
 }
 </script>
 
