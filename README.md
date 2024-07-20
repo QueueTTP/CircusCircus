@@ -35,6 +35,7 @@ But now, if I have it right, you need to clone this and then
 This currently puts a sqlite3 db in the /tmp directory.
 
 ```
+$ deactivate
 $ python3 -m venv venv
 $ source venv/bin/activate
 $ pip install -r requirements.txt
