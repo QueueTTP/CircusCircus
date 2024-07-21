@@ -9,7 +9,7 @@ basedir = path.abspath(path.dirname(__file__))
 class Config:
     """Set Flask configuration from .env file."""
     # General Config
-    SECRET_KEY = 'kristofer'
+    SECRET_KEY = 'kristx`ofer'
     FLASK_APP = 'forum.app'
 
     # Database
