@@ -21,6 +21,8 @@ def init_site():
 	admin = add_subforum("Forum", "Announcements, bug reports, and general discussion about the forum belongs here")
 	add_subforum("Announcements", "View forum announcements here",admin)
 	add_subforum("Bug Reports", "Report bugs with the forum here", admin)
+	add_subforum("subform1","this part is description",admin)
+	add_subforum("subform2","this is description")
 	add_subforum("General Discussion", "Use this subforum to post anything you want")
 	add_subforum("Other", "Discuss other things here")
 
@@ -57,24 +59,3 @@ with app.app_context():
 def index():
 	subforums = Subforum.query.filter(Subforum.parent_id == None).order_by(Subforum.id)
 	return render_template("subforums.html", subforums=subforums)
-
-"""
-#Qian
-@app.route('/createpost',methods=['Get','Post'])
-def create_post():
-	if request.method == 'Post':
-		title = request.form['title']
-		content = request.form['content']
-		filename = None
-		if 'photo' in request.files:
-			file = request.files['photo']
-			if file and file.filename != '':
-				filename = secure_filename(file.filename)
-				file.save(os.path.join(app.config['UPLOAD_PHOTO'], filename))
-		post = Post(title=title, content=content, image_filename=filename)
-		db.session.add(post)
-		db.session.commit()
-		return redirect(url_for('index'))
-	return render_template('createpost.html')
-"""
-
