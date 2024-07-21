@@ -1,23 +1,32 @@
 <div class="full-width-container">
-	<table class="three-column-table">
-		<tr>
-			<td class="left-align">
-				<a href="/" id="nolinks">
-				<img src="{{ url_for('static', filename='logo.jpg') }}" alt="Animal Image" class="layout-image"></a>
-			</td>
-			<td class="left-align">
-				 <img src="{{ url_for('static', filename='logo_txt.jpg') }}" alt="Animal Image" class="layout-image2"></a>
-				<!-- <b>{{ config.SITE_NAME }}</b>{% if config.SITE_DESCRIPTION %} - {% endif %} <i>{{ config.SITE_DESCRIPTION }}</i>-->
-			</td>
-			<td class="right-align">
-				<div class="login">
-					{% if current_user.is_authenticated %}
-						<b {% if current_user.admin %} style="color: red;" {% endif %}>{{ current_user.username }}</b><a class="logoutlink" href="/action_logout">(logout)</a>
-					{% else %}
-						<a href="/loginform">Click here to login or register!</a>
-					{% endif %}
-				</div>
-			</td>
-		</tr>
-	</table>
-	</div>
+    <table class="three-column-table">
+        <tr>
+            <td class="left-align">
+                <a href="/" id="nolinks">
+                <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Animal Image" class="layout-image"></a>
+            </td>
+            <td class="left-align">
+                <img src="{{ url_for('static', filename='logo_txt.jpg') }}" alt="Animal Image" class="layout-image2"></a>
+            </td>
+            <td class="right-align">
+                <div class="login">
+                    {% if current_user.is_authenticated %}
+                        <div class="user-info">
+                            <b {% if current_user.admin %} style="color: red;" {% endif %}>{{ current_user.username }}</b>
+                            <a class="logoutlink" href="/action_logout">(logout)</a>
+                            <div class="dark-mode-container">
+                                <span>Dark Mode</span>
+                                <label class="switch">
+                                    <input type="checkbox" id="theme-toggle" {% if current_user.theme %}checked{% endif %}>
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    {% else %}
+                        <a href="/loginform">Click here to login or register!</a>
+                    {% endif %}
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

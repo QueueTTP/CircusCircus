@@ -1,4 +1,3 @@
-
 {% extends 'layout.html' %}
 {% block body %}
 {{ path|safe}}
@@ -116,21 +115,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Added javascript to display likes and dislies -Peter
 function likePost(postId) {
-    console.log("Liking post with ID:", postId); // Debug log
+    if (localStorage.getItem('liked_' + postId)) {
+        alert("You have already liked this post.");
+        return;
+    }
+
     fetch(`/like_post/${postId}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         }
     })
-    .then(response => {
-        console.log("Response:", response); // Debug log
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
-        console.log("Data:", data); // Debug log
         if (data.success) {
             document.getElementById('like-count').innerText = data.like_count;
+            localStorage.setItem('liked_' + postId, 'true');
         } else {
             alert('Error: ' + data.message);
         }
@@ -139,6 +139,11 @@ function likePost(postId) {
 }
 
 function dislikePost(postId) {
+    if (localStorage.getItem('disliked_' + postId)) {
+        alert("You have already disliked this post.");
+        return;
+    }
+
     fetch(`/dislike_post/${postId}`, {
         method: 'POST',
         headers: {
@@ -149,6 +154,7 @@ function dislikePost(postId) {
     .then(data => {
         if (data.success) {
             document.getElementById('dislike-count').innerText = data.dislike_count;
+            localStorage.setItem('disliked_' + postId, 'true');
         } else {
             alert('Error: ' + data.message);
         }
@@ -159,4 +165,3 @@ function dislikePost(postId) {
 
 
 {% endblock %}
-
