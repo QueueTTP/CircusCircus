@@ -1,48 +1,68 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.min.css') }}">
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style0.css') }}">
-	<title>{{ config.SITE_NAME }}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <link id="light-theme" rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style0.css') }}">
+    <link id="dark-theme" rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styleDark.css') }}" disabled>
+    <title>{{ config.SITE_NAME }}</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-<body>
+<body data-dark-mode="{{ 'true' if current_user.theme else 'false' }}">
 <div class="page">
-	<!-- Add the image here -->
-	<div class="header">
-		
-		{% include 'header.html' %}
-	
-	</div>
-	{% if errors %}
-	<div class="errors">
-		{% for error in errors %}
-		<p class="error">
-			{{ error }}
-		</p>
-
-		{% endfor %}
-	</div>
-	{% endif %}
-	<div class="content">
-		{% block body %}{% endblock %}
-	</div>
+    <div class="header">
+        {% include 'header.html' %}
+    </div>
+    {% if errors %}
+    <div class="errors">
+        {% for error in errors %}
+        <p class="error">
+            {{ error }}
+        </p>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <div class="content">
+        {% block body %}{% endblock %}
+    </div>
 </div>
 
 <footer class="footer">
-	<p>&copy; 2024 COPYRIGHT. All rights reserved.</p>
-	<p>
-		<a href="/about-us">About Us</a> |
-		<a href="/privacy-policy">Privacy Policy</a> |
-		<a href="/terms-of-service">Terms of Service</a> |
-		<a href="/contact-us">Contact Us</a>
-	</p>
-	<p>
-		Follow us on:
-		<a href="https://www.facebook.com/QTTP" target="_blank">Facebook</a> |
-		<a href="https://www.twitter.com/QTTP" target="_blank">Twitter</a> |
-		<a href="https://www.instagram.com/QTTP" target="_blank">Instagram</a>
-	</p>
+    <p>&copy; 2024 COPYRIGHT. All rights reserved.</p>
+    <p>
+        <a href="/about-us">About Us</a> |
+        <a href="/privacy-policy">Privacy Policy</a> |
+        <a href="/terms-of-service">Terms of Service</a> |
+        <a href="/contact-us">Contact Us</a>
+    </p>
+    <p>
+        Follow us on:
+        <a href="https://www.facebook.com/QTTP" target="_blank">Facebook</a> |
+        <a href="https://www.twitter.com/QTTP" target="_blank">Twitter</a> |
+        <a href="https://www.instagram.com/QTTP" target="_blank">Instagram</a>
+    </p>
 </footer>
 
+<script>
+    $(document).ready(function(){
+        var isDarkMode = $('body').data('dark-mode') === 'true';
+        if (isDarkMode) {
+            $('#light-theme').prop('disabled', true);
+            $('#dark-theme').prop('disabled', false);
+        }
+
+        $('#theme-toggle').change(function(){
+            var isDarkMode = this.checked;
+            $.post("{{ url_for('routes.action_update_settings') }}", {theme: isDarkMode}, function(){
+                if (isDarkMode) {
+                    $('#light-theme').prop('disabled', true);
+                    $('#dark-theme').prop('disabled', false);
+                } else {
+                    $('#light-theme').prop('disabled', false);
+                    $('#dark-theme').prop('disabled', true);
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>

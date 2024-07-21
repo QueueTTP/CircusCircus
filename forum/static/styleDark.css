@@ -1,24 +1,52 @@
 /* Importing Elegant Fonts from Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@400;600&display=swap');
+
 /* Color Palette */
 :root {
-    --color-darkest: #1C1C1C;
-    --color-darker: #333333;
-    --color-dark: #4F4F4F;
-    --color-medium-dark: #666666;
-    --color-medium-light: #999999;
-    --color-light: #B3B3B3;
-    --color-lightest: #E6E6E6;
+    --color-darkest: #2E2E2E; /* Dark grey */
+    --color-darker: #3A3A3A; /* Slightly lighter grey */
+    --color-dark: #464646; /* Another shade lighter */
+    --color-medium-dark: #606060; /* Medium dark grey */
+    --color-medium: #7A7A7A; /* Medium grey */
+    --color-medium-light: #B0B0B0; /* Light grey */
+    --color-light: #D3D3D3; /* Very light grey */
+    --color-lightest: #E8E8E8; /* Almost white grey */
+    --color-background: #2E2E2E; /* Background color */
 }
+
 body {
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    background-color: var(--color-darkest);
+    background-color: var(--color-background);
     color: var(--color-lightest);
 }
+
+.full-width-container {
+    width: 100%;
+    padding: 10px;
+}
+
+.three-column-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.three-column-table td {
+    padding: 10px;
+    border: 1px solid var(--color-dark);
+}
+
+.left-align {
+    text-align: left;
+}
+
+.right-align {
+    text-align: right;
+}
+
 .page {
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
@@ -27,70 +55,77 @@ body {
     width: 80%;
     padding: 3%;
     background-color: var(--color-darker);
-    padding-top: 80px; /* To ensure content is not hidden under the fixed header */
-    padding-bottom: 50px; /* To ensure content is not hidden under the fixed footer */
+    padding-top: 20px; /* Adjusted for non-fixed header */
 }
+
 .header {
     display: flex;
     align-items: center;
-    justify-content: center;
-    border: 1px solid var(--color-light);
+    border: 1px solid var(--color-medium-dark);
     padding: 1% 2%;
-    background-color: var(--color-dark);
-    position: fixed;
-    top: 0;
+    background-color: var(--color-darkest);
     width: 100%;
-    z-index: 1000;
+    box-sizing: border-box;
 }
+
 .header img {
     margin-right: 20px;
 }
+
 .header-title {
     font-family: 'Playfair Display', serif;
-    font-size: 18px;
-    font-weight: 700;
+    font-size: 28px;
+    font-weight: 800;
+    flex: 1;
+    text-align: center;
+    color: var(--color-lightest);
 }
+
 .header-right {
     margin-left: auto;
+    text-align: right;
 }
-.content {
-    margin-top: 0.5%;
-}
+
 .login {
-    width: 25%;
-    float: right;
-    text-align: center;
+    text-align: right;
 }
+
 .loginbox {
     margin: 3% auto;
     text-align: center;
 }
+
 .loginelement {
     margin-top: 0.5%;
 }
+
 .logoutlink {
     padding-left: 0.5%;
     font-size: 14px;
     color: var(--color-lightest);
 }
+
 .postsubmit {
     margin: auto;
     text-align: center;
     background-color: var(--color-dark);
     color: var(--color-lightest);
-    border: 1px solid var(--color-light);
+    border: 1px solid var(--color-medium-dark);
     border-radius: 5px;
     padding: 0.5% 1%;
     cursor: pointer;
 }
+
 .postsubmit:hover {
     background-color: var(--color-medium-dark);
 }
+
 .subforumlisting {
     border-bottom: 1px solid var(--color-medium-dark);
     padding: 1%;
     margin-bottom: 1%;
 }
+
 .inputbox {
     padding: 0.25%;
     margin-top: 0.5%;
@@ -98,154 +133,243 @@ body {
     border: 1px solid var(--color-medium-dark);
     color: var(--color-lightest);
 }
+
 .errors {
     border-bottom: 1px solid var(--color-medium-dark);
     margin-top: 2%;
 }
+
 .error {
     color: red;
     font-weight: bold;
 }
+
 .subforumtitle {
     color: var(--color-medium-light);
     font-size: 18px;
     font-weight: 700;
     font-family: 'Playfair Display', serif;
 }
+
 .subforumdesc {
     font-size: 15px;
     font-style: italic;
 }
+
 .subforumheader {
     padding: 1% 1.5%;
     margin-bottom: 0.5%;
-    border: 1px solid var(--color-light);
-    background-color: var(--color-dark);
+    border: 1px solid var(--color-medium-dark);
+    background-color: var(--color-darker);
     font-size: 18px;
     font-family: 'Playfair Display', serif;
     font-weight: 700;
 }
+
 .subforumheadertitle {
     display: inline;
     font-weight: bold;
 }
+
 .subforumheaderdesc {
     display: inline;
 }
+
 .post {
     padding: 1%;
     border-bottom: 1px solid var(--color-medium-dark);
 }
+
 .postusername {
     font-style: italic;
     font-size: 14px;
+    color: var(--color-medium-light);
 }
+
 .subforumheaderlink {
     font-style: italic;
     font-size: 14px;
     margin-top: 0.5%;
     color: var(--color-lightest);
 }
+
 .postinginfo {
     font-size: 12px;
     font-style: italic;
+    color: var(--color-medium-light);
 }
+
 #nolinks {
     text-decoration: none;
 }
+
 .noposts {
     padding: 1%;
 }
+
 .subsubforums {
-    border: 1px solid var(--color-light);
+    border: 1px solid var(--color-medium-dark);
     padding: 0.5% 1%;
     margin-top: 0.5%;
 }
+
 .subsubforumtitle {
     font-weight: bolder;
     text-decoration: none;
     font-size: 16px;
     color: var(--color-lightest);
 }
+
 .subsubforumdesc {
     font-style: italic;
     font-size: 14px;
+    color: var(--color-medium-light);
 }
+
 .toplevelinfo {
     padding: 0.5%;
     font-weight: bold;
 }
+
 .actualpost {
     padding: 1%;
-    border: 1px solid var(--color-light);
+    border: 1px solid var(--color-medium-dark);
     border-collapse: collapse;
     margin-bottom: 1%;
 }
+
 .actualposttitle {
     border-collapse: collapse;
-    border-bottom: 1px solid var(--color-light);
+    border-bottom: 1px solid var(--color-medium-dark);
     padding: 1%;
     font-size: 18px;
     font-weight: bold;
     font-family: 'Playfair Display', serif;
 }
+
 .postcontent {
     padding: 1%;
 }
+
 .postposter {
     font-size: 14px;
     font-style: italic;
     color: var(--color-medium-light);
 }
+
 .posttime {
     font-style: italic;
     font-size: 12px;
+    color: var(--color-medium-light);
 }
+
 .whitespace {
     white-space: pre-line;
 }
+
 .comments {
     border: 1px solid var(--color-medium-dark);
     padding: 1%;
     margin-top: 1%;
 }
+
 .comment {
     border-bottom: 1px solid var(--color-medium-dark);
 }
+
 .commentuser {
     display: inline;
     font-weight: bold;
+    color: var(--color-lightest);
 }
+
 .commentcontent {
     display: inline;
+    color: var(--color-lightest);
 }
+
 .commenttime {
     font-size: 12px;
     font-style: italic;
+    color: var(--color-medium-light);
 }
+
 .addcomment {
     display: none;
     margin: auto;
     text-align: center;
 }
+
 .varwidth {
     width: 50%;
 }
+
 .layout-image {
-    width: 90px;
+    width: 130px;
     height: auto;
-    float: left;
     display: block;
-    margin: 10px;
 }
+
+.layout-image2 {
+    width: 430px;
+    height: auto;
+    display: block;
+}
+
 .footer {
     text-align: center;
     padding: 10px;
-    background-color: var(--color-dark);
-    position: fixed;
-    bottom: 0;
+    background-color: var(--color-darker);
     width: 100%;
     font-family: 'Playfair Display', serif;
-    z-index: 1000;
     color: var(--color-lightest);
+}
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 34px;
+    height: 20px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 12px;
+    width: 12px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+    transform: translateX(14px);
+}
+
+body {
+    transform: none !important;
+    zoom: 1 !important;
 }

@@ -174,3 +174,13 @@ def dislike_post(post_id):
     db.session.commit()
     print(f"New dislike count: {post.dislike_count}")
     return jsonify(success=True, dislike_count=post.dislike_count)
+
+@login_required
+@rt.route('/action_update_settings', methods=['POST'])
+def action_update_settings():
+    theme = request.form.get('theme') == 'true'  # Get the theme value from the form
+    
+    current_user.theme = theme
+    db.session.commit()
+    
+    return '', 204  # No content to return
