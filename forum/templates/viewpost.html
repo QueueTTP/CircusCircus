@@ -89,6 +89,31 @@ function toggle(){
 	}
 	
 }
+
+function toggle() {
+    var div = document.getElementById("addcomment");
+    var button = document.getElementById("displayaddcomment");
+    if (div.style.display === "none" || div.style.display.trim() === "") {
+        div.style.display = "inline";
+        button.value = "Hide";
+    } else {
+        div.style.display = "none";
+        button.value = "Add a comment";
+    }
+}
+
+
+// Convert URLs to clickable links in post content - Peter
+document.addEventListener('DOMContentLoaded', function() {
+    var postContent = document.querySelector('.postcontent');
+    if (postContent) {
+        var html = postContent.innerHTML;
+        var urlPattern = /(https?:\/\/[^\s]+)/g;
+        html = html.replace(urlPattern, '<a href="$1" target="_blank">$1</a>');
+        postContent.innerHTML = html;
+    }
+});
+
 // Added javascript to display likes and dislies -Peter
 function likePost(postId) {
     console.log("Liking post with ID:", postId); // Debug log
@@ -134,5 +159,4 @@ function dislikePost(postId) {
 
 
 {% endblock %}
-
 
