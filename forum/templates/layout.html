@@ -2,12 +2,29 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='bootstrap.min.css') }}">
-    <link id="light-theme" rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style0.css') }}">
-    <link id="dark-theme" rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styleDark.css') }}" disabled>
+    <link id="theme-style" rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style0.css') }}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
     <title>{{ config.SITE_NAME }}</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    $(document).ready(function() {
+        var isDarkMode = $('body').data('theme') === 'dark';
+        $('#theme-toggle').prop('checked', isDarkMode);
+        var baseUrl = '{{ url_for("static", filename="") }}';
+        var themeFile = isDarkMode ? 'styledark.css' : 'style0.css';
+        $('#theme-style').attr('href', baseUrl + themeFile);
+
+        $('#theme-toggle').change(function() {
+            var isDarkMode = this.checked;
+            $.post("{{ url_for('routes.update_theme') }}", { theme: isDarkMode }, function() {
+                var themeFile = isDarkMode ? 'styledark.css' : 'style0.css';
+                $('#theme-style').attr('href', baseUrl + themeFile);
+            });
+        });
+    });
+    </script>
 </head>
-<body data-dark-mode="{{ 'true' if current_user.theme else 'false' }}">
+<body data-theme="{{ 'dark' if current_user.theme else 'light' }}">
 <div class="page">
     <div class="header">
         {% include 'header.html' %}
@@ -15,9 +32,7 @@
     {% if errors %}
     <div class="errors">
         {% for error in errors %}
-        <p class="error">
-            {{ error }}
-        </p>
+        <p class="error">{{ error }}</p>
         {% endfor %}
     </div>
     {% endif %}
@@ -42,27 +57,5 @@
     </p>
 </footer>
 
-<script>
-    $(document).ready(function(){
-        var isDarkMode = $('body').data('dark-mode') === 'true';
-        if (isDarkMode) {
-            $('#light-theme').prop('disabled', true);
-            $('#dark-theme').prop('disabled', false);
-        }
-
-        $('#theme-toggle').change(function(){
-            var isDarkMode = this.checked;
-            $.post("{{ url_for('routes.action_update_settings') }}", {theme: isDarkMode}, function(){
-                if (isDarkMode) {
-                    $('#light-theme').prop('disabled', true);
-                    $('#dark-theme').prop('disabled', false);
-                } else {
-                    $('#light-theme').prop('disabled', false);
-                    $('#dark-theme').prop('disabled', true);
-                }
-            });
-        });
-    });
-</script>
 </body>
 </html>

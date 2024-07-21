@@ -133,7 +133,8 @@ def action_post():
     image_url=request.form.get('image_url')  # Get the image URL from the form
     video_url=request.form.get('video_url')  # Get the video URL from the form
 
-
+    # Get the value of the checkbox
+    public_view = request.form.get('public_view') == '1'
     #check for valid posting
     errors = []
     retry = False
@@ -146,7 +147,15 @@ def action_post():
     if retry:
         return render_template("createpost.html",subforum=subforum,  errors=errors)
 
-    post = Post(title, content, datetime.datetime.now(), image_url=image_url, video_url=video_url)
+    # Create the post object with the public_view value
+    post = Post(
+        title=title, 
+        content=content, 
+        postdate=datetime.datetime.now(), 
+        public_view=public_view, 
+        image_url=image_url, 
+        video_url=video_url
+    )
     subforum.posts.append(post)
     user.posts.append(post)
     db.session.commit()
@@ -175,12 +184,10 @@ def dislike_post(post_id):
     print(f"New dislike count: {post.dislike_count}")
     return jsonify(success=True, dislike_count=post.dislike_count)
 
+@rt.route('/update_theme', methods=['POST'])
 @login_required
-@rt.route('/action_update_settings', methods=['POST'])
-def action_update_settings():
-    theme = request.form.get('theme') == 'true'  # Get the theme value from the form
-    
+def update_theme():
+    theme = request.form.get('theme') == 'true'
     current_user.theme = theme
     db.session.commit()
-    
-    return '', 204  # No content to return
+    return '', 204  # No content
