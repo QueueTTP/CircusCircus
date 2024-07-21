@@ -130,6 +130,10 @@ def action_post():
     user = current_user
     title = request.form['title']
     content = request.form['content']
+    image_url=request.form.get('image_url')  # Get the image URL from the form
+    video_url=request.form.get('video_url')  # Get the video URL from the form
+
+
     #check for valid posting
     errors = []
     retry = False
@@ -141,7 +145,8 @@ def action_post():
         retry = True
     if retry:
         return render_template("createpost.html",subforum=subforum,  errors=errors)
-    post = Post(title, content, datetime.datetime.now())
+
+    post = Post(title, content, datetime.datetime.now(), image_url=image_url, video_url=video_url)
     subforum.posts.append(post)
     user.posts.append(post)
     db.session.commit()
