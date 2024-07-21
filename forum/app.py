@@ -4,6 +4,12 @@ from flask_login import LoginManager
 from forum.models import Subforum, db, User
 
 from . import create_app
+"""
+from flask_uploads import UploadSet, configure_uploads, IMAGES
+import os
+from werkzeug.utils import secure_filename
+"""
+
 app = create_app()
 
 app.config['SITE_NAME'] = 'CuteTP'
@@ -52,6 +58,23 @@ def index():
 	subforums = Subforum.query.filter(Subforum.parent_id == None).order_by(Subforum.id)
 	return render_template("subforums.html", subforums=subforums)
 
-
-
+"""
+#Qian
+@app.route('/createpost',methods=['Get','Post'])
+def create_post():
+	if request.method == 'Post':
+		title = request.form['title']
+		content = request.form['content']
+		filename = None
+		if 'photo' in request.files:
+			file = request.files['photo']
+			if file and file.filename != '':
+				filename = secure_filename(file.filename)
+				file.save(os.path.join(app.config['UPLOAD_PHOTO'], filename))
+		post = Post(title=title, content=content, image_filename=filename)
+		db.session.add(post)
+		db.session.commit()
+		return redirect(url_for('index'))
+	return render_template('createpost.html')
+"""
 

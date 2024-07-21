@@ -35,6 +35,8 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.Text)
     content = db.Column(db.Text)
+    image_url = db.Column(db.String(255), nullable=True)  # Add image URL field
+    video_url = db.Column(db.String(255), nullable=True)  # Add video URL field
     comments = db.relationship("Comment", backref="post")
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     subforum_id = db.Column(db.Integer, db.ForeignKey('subforum.id'))
@@ -43,13 +45,15 @@ class Post(db.Model):
     like_count = db.Column(db.Integer, default=0)
     dislike_count = db.Column(db.Integer, default=0, nullable=False)
     public_view = db.Column(db.Boolean, default=True, nullable=False)
+    #image_filename=db.Column(db.String(150), nullable=True)
+
 
     #cache stuff
     lastcheck = None
     savedresponce = None
 
     # Updated init constructor -Peter
-    def __init__(self, title, content, postdate, like_count=0, dislike_count=0, public_view=False):
+    def __init__(self, title, content, postdate, like_count=0, dislike_count=0, public_view=False, image_url=None, video_url=None):
         self.title = title
         self.content = content
         self.postdate = postdate
@@ -57,6 +61,10 @@ class Post(db.Model):
         self.like_count = like_count
         self.dislike_count = dislike_count
         self.public_view = public_view
+       # self.image_filename=image_filename
+        self.image_url=image_url
+        self.video_url=video_url
+
 
 
     def get_time_string(self):

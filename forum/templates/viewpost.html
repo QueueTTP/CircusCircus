@@ -17,6 +17,16 @@
 	<div class="postcontent">
 		{{post.content}}
 	</div>
+	{% if post.image_url %}
+	<div class ="postimage">
+		<img src="{{ post.image_url }}" alt="Post Image">
+	</div>
+	{% endif %}
+	{% if post.video_url %}
+	<div class="postvideo">
+		<iframe width="560" height="315" src="{{ post.video_url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+	</div>
+	{% endif %}
 
 </div>
 <!-- Add Likies/Dislikes display here-->
