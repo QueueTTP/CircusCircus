@@ -44,8 +44,10 @@ class Post(db.Model):
     # Additional fields added here - Peter 
     like_count = db.Column(db.Integer, default=0)
     dislike_count = db.Column(db.Integer, default=0, nullable=False)
-    public_view = db.Column(db.Boolean, default=True, nullable=False)
+    public_view = db.Column(db.Boolean, default=False)
+
     #image_filename=db.Column(db.String(150), nullable=True)
+
 
 
     #cache stuff
@@ -53,7 +55,9 @@ class Post(db.Model):
     savedresponce = None
 
     # Updated init constructor -Peter
+
     def __init__(self, title, content, postdate, like_count=0, dislike_count=0, public_view=False, image_url=None, video_url=None):
+
         self.title = title
         self.content = content
         self.postdate = postdate
@@ -61,9 +65,11 @@ class Post(db.Model):
         self.like_count = like_count
         self.dislike_count = dislike_count
         self.public_view = public_view
+
        # self.image_filename=image_filename
         self.image_url=image_url
         self.video_url=video_url
+
 
 
 

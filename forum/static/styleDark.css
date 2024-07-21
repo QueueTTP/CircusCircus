@@ -10,7 +10,7 @@
     --color-medium: #7A7A7A; /* Medium grey */
     --color-medium-light: #B0B0B0; /* Light grey */
     --color-light: #D3D3D3; /* Very light grey */
-    --color-lightest: #E8E8E8; /* Almost white grey */
+    --color-lightest: #97959e; /* Almost white grey */
     --color-background: #2E2E2E; /* Background color */
 }
 
@@ -109,7 +109,7 @@ body {
     margin: auto;
     text-align: center;
     background-color: var(--color-dark);
-    color: var(--color-lightest);
+    color: var(--color-medium-light); /* Change text color to a darker shade */
     border: 1px solid var(--color-medium-dark);
     border-radius: 5px;
     padding: 0.5% 1%;
@@ -118,20 +118,31 @@ body {
 
 .postsubmit:hover {
     background-color: var(--color-medium-dark);
+    color: var(--color-lightest); /* Optional: Change text color on hover */
 }
 
-.subforumlisting {
-    border-bottom: 1px solid var(--color-medium-dark);
-    padding: 1%;
-    margin-bottom: 1%;
+/* Ensure other buttons or interactive elements have proper styling */
+.button {
+    background-color: var(--color-dark);
+    color: var(--color-medium-light); /* Adjust text color */
+    border: 1px solid var(--color-medium-dark);
+    border-radius: 5px;
+    padding: 0.5% 1%;
+    cursor: pointer;
 }
 
+.button:hover {
+    background-color: var(--color-medium-dark);
+    color: var(--color-lightest); /* Optional: Change text color on hover */
+}
+
+/* Example for input elements */
 .inputbox {
     padding: 0.25%;
     margin-top: 0.5%;
     background-color: var(--color-darker);
     border: 1px solid var(--color-medium-dark);
-    color: var(--color-lightest);
+    color: var(--color-lightest); /* Consider adjusting text color if needed */
 }
 
 .errors {

@@ -1,106 +1,87 @@
 {% extends 'layout.html' %}
 {% block body %}
-{{ path|safe}}
+{{ path|safe }}
 
 <div class="actualpost">
-	<div class="actualposttitle">
-		<a href="/viewpost?post={{ post.id }}">{{post.title}}</a>
-		<div class="postposter" {% if post.user.admin %} style="color: red;" {% endif %}>
-			{{ post.user.username }}
-
-		</div>
-		<div class="posttime">
-			{{ post.get_time_string() }}
-		</div>
-	</div>
-	<div class="postcontent">
-		{{post.content}}
-	</div>
-	{% if post.image_url %}
-	<div class ="postimage">
-		<img src="{{ post.image_url }}" alt="Post Image">
-	</div>
-	{% endif %}
-	{% if post.video_url %}
-	<div class="postvideo">
-		<iframe width="560" height="315" src="{{ post.video_url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-	</div>
-	{% endif %}
-
+    <div class="actualposttitle">
+        <a href="/viewpost?post={{ post.id }}">{{ post.title }}</a>
+        <div class="postposter" {% if post.user.admin %} style="color: red;" {% endif %}>
+            {{ post.user.username }}
+        </div>
+        <div class="posttime">
+            {{ post.get_time_string() }}
+        </div>
+    </div>
+    <div class="postcontent">
+        {{ post.content }}
+    </div>
+    {% if post.image_url %}
+    <div class="postimage">
+        <img src="{{ post.image_url }}" alt="Post Image">
+    </div>
+    {% endif %}
+    {% if post.video_url %}
+    <div class="postvideo">
+        <iframe width="560" height="315" src="{{ post.video_url }}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    {% endif %}
 </div>
 <!-- Add Likies/Dislikes display here-->
 <!--  -->
 <!-- Added likes and dislike buttons here -Peter -->
 <div class="postlikes">
-    <button onclick="likePost('{{ post.id }}')">👍 Like (<span id="like-count">{{ post.like_count }}</span>)</button>
-    <button onclick="dislikePost('{{ post.id }}')">👎 Dislike (<span id="dislike-count">{{ post.dislike_count }}</span>)</button>
+    <button class="btn btn-light" onclick="likePost('{{ post.id }}')">
+        <i class="bi bi-hand-thumbs-up"></i> Like (<span id="like-count">{{ post.like_count }}</span>)
+    </button>
+    <button class="btn btn-light" onclick="dislikePost('{{ post.id }}')">
+        <i class="bi bi-hand-thumbs-down"></i> Dislike (<span id="dislike-count">{{ post.dislike_count }}</span>)
+    </button>
 </div>
-<!-- end likes disklikes div -->
+<!-- end likes dislikes div -->
 
 <div class="addcomment" id="addcomment">
-	<form action="/action_comment?post={{ post.id }}" method="POST">
-		<textarea class="inputbox varwidth" rows="6" name="content"></textarea><br>
-		<input class="inputbox" style="margin-bottom: 1%;" type="submit" value="Comment">
-	</form>
+    <form action="/action_comment?post={{ post.id }}" method="POST">
+        <textarea class="inputbox varwidth" rows="6" name="content"></textarea><br>
+        <input class="inputbox" style="margin-bottom: 1%;" type="submit" value="Comment">
+    </form>
 </div>
 <div style="text-align: center;">
-
-	
-
-	{% if current_user.is_authenticated %}
-	<input type="button" id="displayaddcomment" onclick="toggle()" value="Add a comment">
-
-	{% else %}
-	<a href="/loginform">Login or register to make a comment</a>
-	{% endif %}
+    {% if current_user.is_authenticated %}
+    <input type="button" id="displayaddcomment" onclick="toggle()" value="Add a comment">
+    {% else %}
+    <a href="/loginform">Login or register to make a comment</a>
+    {% endif %}
 </div>
-{%if comments%}
+{% if comments %}
 <div class="comments">
-{% for comment in comments %}
-	
-	<div class="comment">
-		<div class="commentuser">
-			(<span  {% if comment.user.admin %} style="color: red;" {% endif %}>{{ comment.user.username }}</span>) - 
-		</div>
-		<div class="commentcontent">
-			{{ comment.content }}
-		</div>
-		
-		<div class="commenttime">
-			{{ comment.get_time_string() }}
-		</div>
-	</div>
-	<br>
-	
-{% endfor %}
+    {% for comment in comments %}
+    <div class="comment">
+        <div class="commentuser">
+            (<span {% if comment.user.admin %} style="color: red;" {% endif %}>{{ comment.user.username }}</span>) -
+        </div>
+        <div class="commentcontent">
+            {{ comment.content }}
+        </div>
+        <div class="commenttime">
+            {{ comment.get_time_string() }}
+        </div>
+    </div>
+    <br>
+    {% endfor %}
 </div>
 {% endif %}
 <script type="text/javascript">
-function toggle(){
-	var div = document.getElementById("addcomment");
-	var button = document.getElementById("displayaddcomment")
-	if(div.style.display == "none" || div.style.display.trim() == ""){
-		div.style.display = "inline";
-		button.value="Hide";
-	}else{
-		div.style.display = "none";
-		button.value="Add a comment"
-	}
-	
-}
-
 function toggle() {
     var div = document.getElementById("addcomment");
-    var button = document.getElementById("displayaddcomment");
-    if (div.style.display === "none" || div.style.display.trim() === "") {
+    var button = document.getElementById("displayaddcomment")
+    if (div.style.display == "none" || div.style.display.trim() == "") {
         div.style.display = "inline";
         button.value = "Hide";
     } else {
         div.style.display = "none";
-        button.value = "Add a comment";
+        button.value = "Add a comment"
     }
 }
-
 
 // Convert URLs to clickable links in post content - Peter
 document.addEventListener('DOMContentLoaded', function() {
@@ -113,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Added javascript to display likes and dislies -Peter
+// Added javascript to display likes and dislikes - Peter
 function likePost(postId) {
     if (localStorage.getItem('liked_' + postId)) {
         alert("You have already liked this post.");
@@ -162,6 +143,5 @@ function dislikePost(postId) {
     .catch(error => console.error('Error:', error));
 }
 </script>
-
 
 {% endblock %}
