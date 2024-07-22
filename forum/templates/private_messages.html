@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <h1>Private Messages</h1>
+
+    <h2>Send a New Message</h2>
+    <form action="/private_messages" method="post">
+        <label for="receiver">Receiver Username:</label><br>
+        <input type="text" id="receiver" name="receiver" required><br>
+        
+        <label for="message">Message:</label><br>
+        <textarea id="message" name="message" rows="4" cols="50" required></textarea><br>
+        
+        <input type="submit" value="Send Message">
+    </form>
+
+    <h2>Received Messages</h2>
+    <ul>
+        {% for message in received_messages %}
+            <li>
+                <strong>From:</strong> {{ message.sender.username }}<br>
+                <strong>Date:</strong> {{ message.postdate }}<br>
+                <strong>Message:</strong> {{ message.message }}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Sent Messages</h2>
+    <ul>
+        {% for message in sent_messages %}
+            <li>
+                <strong>To:</strong> {{ message.receiver.username }}<br>
+                <strong>Date:</strong> {{ message.postdate }}<br>
+                <strong>Message:</strong> {{ message.message }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
