@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="postcontent">
-        {{ post.content }}
+        {{ post_content_html|safe }}
     </div>
     {% if post.image_url %}
     <div class="postimage">

@@ -10,6 +10,8 @@
     --color-medium-dark: #B6E2E4;
     --color-dark: #DAEEEF;
     --color-background: #FCF2EC; /* Pinkish color */
+    --logo-image: url('/static/logo.jpg');
+    --logo-text-image: url('/static/logo_txt.jpg');
 }
 
 body {
@@ -20,18 +22,22 @@ body {
     padding: 0;
     background-color: var(--color-background);
 }
+
 .full-width-container {
-    width: 100%;/* Just to visually see the container */
+    width: 100%;
     padding: 10px;
 }
+
 .three-column-table {
     width: 100%;
     border-collapse: collapse;
 }
+
 .three-column-table td {
     padding: 10px;
     border: 1px solid #ccc;
 }
+
 .left-align {
     text-align: left;
 }
@@ -39,6 +45,7 @@ body {
 .right-align {
     text-align: right;
 }
+
 .page {
     font-family: 'Open Sans', sans-serif;
     font-size: 16px;
@@ -274,13 +281,18 @@ body {
 
 .layout-image {
     width: 130px;
-    height: auto;
-    display: block;
+    height: 100px; /* Set a fixed height */
+    background-image: var(--logo-image);
+    background-size: cover;
+    background-position: center;
 }
+
 .layout-image2 {
     width: 430px;
-    height: auto;
-    display: block;
+    height: 100px; /* Set a fixed height */
+    background-image: var(--logo-text-image);
+    background-size: cover;
+    background-position: center;
 }
 
 .footer {
@@ -290,11 +302,6 @@ body {
     width: 100%;
     font-family: 'Playfair Display', serif;
 }
-.user-info {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
 
 .dark-mode-container {
     display: flex;
@@ -302,6 +309,7 @@ body {
     gap: 5px;
     font-size: 14px; /* Small font for "Dark Mode" label */
     margin-top: 5px; /* Adjust as needed to position under username */
+    justify-content: flex-end;
 }
 
 .switch {
