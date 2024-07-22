@@ -192,3 +192,16 @@ def update_theme():
     current_user.theme = theme
     db.session.commit()
     return '', 204  # No content
+
+@rt.route('/toggle_language', methods=['POST'])
+@login_required
+def toggle_language():
+    data = request.get_json()
+    language_preference = data['language']
+    try:
+        current_user.language = language_preference
+        db.session.commit()
+        return jsonify(success=True)
+    except Exception as e:
+        db.session.rollback()
+        return jsonify(success=False, message=str(e))

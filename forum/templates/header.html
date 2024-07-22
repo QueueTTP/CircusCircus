@@ -20,6 +20,13 @@
                                 <span class="slider round"></span>
                             </label>
                         </div>
+                        <div class="language-mode-container">
+                            <span>Language</span>
+                            <label class="switch">
+                                <input type="checkbox" id="language-toggle" {% if current_user.language == 'en' %}checked{% endif %}>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
                     {% else %}
                         <a href="/loginform">Click here to login or register!</a>
                     {% endif %}

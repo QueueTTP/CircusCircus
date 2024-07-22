@@ -20,7 +20,7 @@ class User(UserMixin, db.Model):
     # Additional fields added here - Peter 
     subforum_start = db.Column(db.Integer, nullable=False, default=0)
     theme = db.Column(db.Boolean, default=False)
-    
+    language = db.Column(db.Boolean, default=False)
     
     
 

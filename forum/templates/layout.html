@@ -21,6 +21,23 @@
                 $('#theme-style').attr('href', baseUrl + themeFile);
             });
         });
+
+        var isSpanish = $('#language-toggle').prop('checked');
+        $('#language-toggle').change(function() {
+            var isSpanish = this.checked;
+            $.ajax({
+                url: "{{ url_for('routes.toggle_language') }}",
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ language: isSpanish }),
+                success: function(response) {
+                    if (!response.success) {
+                        alert('Error: ' + response.message);
+                    }
+                }
+            });
+        });
+
     });
     </script>
 </head>
