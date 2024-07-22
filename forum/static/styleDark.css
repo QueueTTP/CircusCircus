@@ -3,16 +3,19 @@
 
 /* Color Palette */
 :root {
-    --color-darkest: #2E2E2E; /* Dark grey */
-    --color-darker: #3A3A3A; /* Slightly lighter grey */
-    --color-dark: #464646; /* Another shade lighter */
+    --color-darkest: #1c2d3d; /* Dark grey */
+    --color-darker: #1c2d3d; /* Slightly lighter grey */
+    --color-dark: #1c2d3d; /* Another shade lighter */
     --color-medium-dark: #606060; /* Medium dark grey */
     --color-medium: #7A7A7A; /* Medium grey */
     --color-medium-light: #B0B0B0; /* Light grey */
     --color-light: #D3D3D3; /* Very light grey */
     --color-lightest: #97959e; /* Almost white grey */
-    --color-background: #2E2E2E; /* Background color */
+    --color-background: #1c2d3d; /* Background color */
+    --logo-image: url('/static/logo_dark.jpg');
+    --logo-text-image: url('/static/logo_txt_dark.jpg');
 }
+
 
 body {
     font-family: 'Open Sans', sans-serif;
@@ -317,14 +320,18 @@ body {
 
 .layout-image {
     width: 130px;
-    height: auto;
-    display: block;
+    height: 100px; /* Set a fixed height */
+    background-image: var(--logo-image);
+    background-size: cover;
+    background-position: center;
 }
 
 .layout-image2 {
     width: 430px;
-    height: auto;
-    display: block;
+    height: 100px; /* Set a fixed height */
+    background-image: var(--logo-text-image);
+    background-size: cover;
+    background-position: center;
 }
 
 .footer {
@@ -335,6 +342,7 @@ body {
     font-family: 'Playfair Display', serif;
     color: var(--color-lightest);
 }
+
 .switch {
     position: relative;
     display: inline-block;

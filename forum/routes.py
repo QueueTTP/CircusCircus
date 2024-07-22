@@ -7,6 +7,7 @@ import datetime
 from flask import Blueprint, render_template, request, redirect, url_for
 from forum.models import User, Post, Comment, Subforum, valid_content, valid_title, db, generateLinkPath, error
 from forum.user import username_taken, email_taken, valid_username
+import markdown 
 
 ##
 # This file needs to be broken up into several, to make the project easier to work on.
@@ -102,7 +103,9 @@ def viewpost():
     if not post.subforum.path:
         subforumpath = generateLinkPath(post.subforum.id)
     comments = Comment.query.filter(Comment.post_id == postid).order_by(Comment.id.desc()) # no need for scalability now
-    return render_template("viewpost.html", post=post, path=subforumpath, comments=comments)
+    post_content_html = markdown.markdown(post.content)
+
+    return render_template("viewpost.html", post=post, post_content_html=post_content_html, path=subforumpath, comments=comments)
 
 @login_required
 @rt.route('/action_comment', methods=['POST', 'GET'])
@@ -191,3 +194,4 @@ def update_theme():
     current_user.theme = theme
     db.session.commit()
     return '', 204  # No content
+
