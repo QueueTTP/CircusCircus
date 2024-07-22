@@ -1,11 +1,11 @@
 # Add jsonify for dynamic likes and dislikes -Peter
 from flask import jsonify, request
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
 from flask_login import current_user, login_user, logout_user
 from flask_login.utils import login_required
 import datetime
 from flask import Blueprint, render_template, request, redirect, url_for
-from forum.models import User, Post, Comment, Subforum, valid_content, valid_title, db, generateLinkPath, error
+from forum.models import User, Post, Comment, Subforum, Message, valid_content, valid_title, db, generateLinkPath, error
 from forum.user import username_taken, email_taken, valid_username
 import markdown 
 
@@ -28,6 +28,28 @@ def action_login():
         return render_template("login.html", errors=errors)
     return redirect("/")
 
+@rt.route('/private_messages', methods=['GET', 'POST'])
+@login_required
+def private_messages():
+    if request.method == 'POST':
+        receiver_username = request.form['receiver']
+        message_content = request.form['message']
+
+        receiver = User.query.filter_by(username=receiver_username).first()
+        if not receiver:
+            flash('User not found', 'error')
+            return redirect(url_for('routes.private_messages'))
+
+        new_message = Message(sender_id=current_user.id, receiver_id=receiver.id, message=message_content)
+        db.session.add(new_message)
+        db.session.commit()
+        flash('Message sent!', 'success')
+        return redirect(url_for('routes.private_messages'))
+
+    received_messages = Message.query.filter_by(receiver_id=current_user.id).order_by(Message.postdate.desc()).all()
+    sent_messages = Message.query.filter_by(sender_id=current_user.id).order_by(Message.postdate.desc()).all()
+    
+    return render_template('private_messages.html', received_messages=received_messages, sent_messages=sent_messages)
 
 @login_required
 @rt.route('/action_logout')
