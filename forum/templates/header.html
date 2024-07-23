@@ -23,7 +23,7 @@
                         <div class="language-mode-container">
                             <span>Language</span>
                             <label class="switch">
-                                <input type="checkbox" id="language-toggle" {% if current_user.language == 'en' %}checked{% endif %}>
+                                <input type="checkbox" id="language-toggle" {% if current_user.language %}checked{% endif %}>
                                 <span class="slider round"></span>
                             </label>
                         </div>
