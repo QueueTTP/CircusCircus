@@ -20,7 +20,9 @@ class User(UserMixin, db.Model):
     # Additional fields added here - Peter 
     subforum_start = db.Column(db.Integer, nullable=False, default=0)
     theme = db.Column(db.Boolean, default=False)
-    language = db.Column(db.Boolean, default=False)
+    sent_messages = db.relationship('Message', foreign_keys='Message.sender_id', backref='sender', lazy='dynamic')
+    # Add a relationship for received messages
+    received_messages = db.relationship('Message', foreign_keys='Message.receiver_id', backref='receiver', lazy='dynamic')
     
     
 
@@ -28,6 +30,8 @@ class User(UserMixin, db.Model):
         self.email = email
         self.username = username
         self.password_hash = generate_password_hash(password)
+        self.password_hash = generate_password_hash(password, method='pbkdf2:sha256')
+
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
@@ -154,6 +158,13 @@ class Comment(db.Model):
         else:
             self.savedresponce = "Just a moment ago!"
         return self.savedresponce
+
+class Message(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    message = db.Column(db.Text)
+    postdate = db.Column(db.DateTime, default=datetime.datetime.now)
 
 
 def error(errormessage):
